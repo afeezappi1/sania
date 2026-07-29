@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Message For Sania</title>
+    <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&family=Plus+Jakarta+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #06050b;
+            --panel-bg: rgba(255, 255, 255, 0.06);
+            --border-glow: #ff7fbf;
+            --accent-purple: #8f7cff;
+            --accent-cyan: #5ce1e6;
+            --vector-color: #f8f4ff;
+            --paper-bg: #fffaf3;
+            --text-color: #2e223a;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background:
+                radial-gradient(circle at top left, rgba(255, 127, 191, 0.18), transparent 24%),
+                linear-gradient(135deg, #06050b 0%, #120d23 40%, #25123a 100%);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            color: var(--vector-color);
+        }
+
+        /* PREMIUM GLASS CONTAINER SCREEN */
+        .workspace {
+            position: relative;
+            width: 90%;
+            max-width: 850px;
+            height: 650px;
+            background: linear-gradient(135deg, rgba(255,255,255,0.12), rgba(255,255,255,0.03));
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            border-radius: 32px;
+            backdrop-filter: blur(20px);
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            padding-bottom: 50px;
+            box-shadow: 0 30px 70px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.08);
+        }
+
+        /* CENTRAL TYPEWRITER ENGINE */
+        .typewriter-container {
+            position: relative;
+            width: 500px;
+            height: 360px;
+            background: transparent;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            z-index: 5;
+        }
+
+        /* VIEWPORT WINDOW FOR CONTINUOUS PAPER FEED */
+        .paper-viewport {
+            position: absolute;
+            bottom: 220px;
+            width: 340px;
+            height: 240px;
+            overflow: hidden;
+            border: 3px solid rgba(143, 124, 255, 0.55);
+            border-bottom: none;
+            border-radius: 8px 8px 0 0;
+            background: linear-gradient(180deg, #fffdf9 0%, #fff3f7 100%);
+            box-shadow: 0 16px 40px rgba(255, 127, 191, 0.14);
+            z-index: 1;
+        }
+
+        /* SCROLLING PAPER CONTAINER */
+        .paper-roller {
+            width: 100%;
+            padding: 25px 25px 100px 25px;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+
+        .paper-content {
+            font-family: 'Courier Prime', monospace;
+            font-size: 1.05rem;
+            line-height: 1.6;
+            color: var(--text-color);
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            letter-spacing: 0.01em;
+        }
+
+        .cursor {
+            display: inline-block;
+            width: 2px;
+            height: 1.2rem;
+            background: linear-gradient(180deg, var(--border-glow), var(--accent-purple));
+            margin-left: 2px;
+            animation: blink 0.8s infinite;
+            vertical-align: middle;
+        }
+
+        @keyframes blink { 50% { opacity: 0; } }
+
+        /* TYPEWRITER CHASSIS */
+        .typewriter-body {
+            position: absolute;
+            bottom: 0;
+            width: 480px;
+            height: 230px;
+            background: linear-gradient(180deg, #1d172b 0%, #100d19 100%);
+            border: 4px solid rgba(248, 244, 255, 0.95);
+            border-radius: 28px 28px 16px 16px;
+            z-index: 6;
+            box-shadow: 0 22px 48px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.08);
+            overflow: hidden;
+        }
+
+        .typewriter-top {
+            width: 100%;
+            height: 60px;
+            border-bottom: 4px solid rgba(248, 244, 255, 0.95);
+            background: linear-gradient(90deg, #241d34 0%, #1b1427 100%);
+            position: relative;
+            display: flex;
+            justify-content: center;
+        }
+
+        .typewriter-top::before {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            width: 160px;
+            height: 40px;
+            border: 4px solid rgba(248, 244, 255, 0.95);
+            border-bottom: none;
+            border-radius: 14px 14px 0 0;
+            background: linear-gradient(180deg, #19162b 0%, #0f0b17 100%);
+            box-shadow: inset 0 2px 8px rgba(255, 127, 191, 0.14);
+        }
+
+        .carriage-knob {
+            position: absolute;
+            top: 15px;
+            width: 16px;
+            height: 26px;
+            background: linear-gradient(135deg, #433b58, #221e2d);
+            border: 3px solid rgba(248, 244, 255, 0.95);
+            border-radius: 4px;
+        }
+        .knob-left { left: -8px; transform: rotate(-90deg); }
+        .knob-right { right: -8px; transform: rotate(90deg); }
+
+        /* THE MATRIX KEYBOARD */
+        .keyboard-area {
+            width: 100%;
+            height: 166px;
+            padding: 20px 35px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            background: linear-gradient(180deg, #14101f 0%, #0e0b15 100%);
+        }
+
+        .key-row {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .key {
+            width: 26px;
+            height: 26px;
+            border: 2.5px solid rgba(248, 244, 255, 0.9);
+            border-radius: 50%;
+            background: rgba(255,255,255,0.04);
+            transition: transform 0.05s ease;
+        }
+
+        .key.striking {
+            transform: scale(0.8);
+            background: linear-gradient(135deg, var(--border-glow), var(--accent-purple));
+            border-color: #fff;
+            box-shadow: 0 0 16px rgba(255, 127, 191, 0.4);
+        }
+
+        .space-bar {
+            width: 200px;
+            height: 16px;
+            border: 2.5px solid rgba(248, 244, 255, 0.95);
+            border-radius: 8px;
+            background: rgba(255,255,255,0.04);
+        }
+        .space-bar.striking {
+            background: linear-gradient(135deg, var(--border-glow), var(--accent-purple));
+            border-color: #fff;
+        }
+
+        /* CYBER COOL MECHANICAL PISTONS (REPLACED ODD CURVES) */
+        .piston-hand {
+            position: absolute;
+            bottom: -60px;
+            width: 8px;
+            height: 180px;
+            background: linear-gradient(to top, transparent, rgba(248, 244, 255, 0.9));
+            z-index: 10;
+            pointer-events: none;
+            border-radius: 4px;
+            opacity: 0.8;
+            transition: transform 0.08s ease;
+        }
+
+        .piston-left {
+            left: 140px;
+            transform: rotate(-15deg) translateY(20px);
+        }
+
+        .piston-right {
+            right: 140px;
+            transform: rotate(15deg) translateY(20px);
+        }
+
+        /* Dynamic striking keystroke movements */
+        .piston-left.strike-act {
+            animation: leftPistonStrike 0.15s ease-in-out;
+        }
+
+        .piston-right.strike-act {
+            animation: rightPistonStrike 0.15s ease-in-out;
+        }
+
+        @keyframes leftPistonStrike {
+            0%, 100% { transform: rotate(-15deg) translateY(20px); }
+            50% { transform: rotate(-5deg) translateY(-25px) translateX(25px); color: var(--border-glow); }
+        }
+
+        @keyframes rightPistonStrike {
+            0%, 100% { transform: rotate(15deg) translateY(20px); }
+            50% { transform: rotate(5deg) translateY(-25px) translateX(-25px); }
+        }
+
+        /* INTERACTION ENTRY LAYER */
+        .overlay-trigger {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(135deg, rgba(6,5,11,0.98), rgba(37,18,58,0.95));
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.8s ease;
+        }
+
+        .start-btn {
+            background: linear-gradient(135deg, rgba(255,127,191,0.15), rgba(143,124,255,0.2));
+            border: 2px solid transparent;
+            color: #fff7fb;
+            padding: 16px 40px;
+            border-radius: 50px;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            letter-spacing: 1px;
+            box-shadow: 0 0 24px rgba(143,124,255,0.18);
+            transition: all 0.4s ease;
+        }
+
+        .start-btn:hover {
+            background: linear-gradient(135deg, var(--border-glow), var(--accent-purple));
+            color: #fff;
+            box-shadow: 0 0 34px rgba(255,127,191,0.35);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="overlay-trigger" id="cover">
+        <p style="margin-bottom: 25px; font-size: 1.1rem; color: #a49fa9; letter-spacing: 0.5px;">A secure terminal transmission is staging...</p>
+        <button class="start-btn" onclick="openLetter()">INITIALIZE MY MESSAGE</button>
+    </div>
+
+    <div class="workspace">
+        <div class="typewriter-container">
+            
+            <!-- VIEWPORT MASKS SCROLLING LOGIC -->
+            <div class="paper-viewport" id="viewport">
+                <div class="paper-roller" id="paper">
+                    <div class="paper-content"><span id="typewriter-text"></span><span class="cursor"></span></div>
+                </div>
+            </div>
+
+            <div class="typewriter-body">
+                <div class="typewriter-top">
+                    <div class="carriage-knob knob-left"></div>
+                    <div class="carriage-knob knob-right"></div>
+                </div>
+                
+                <div class="keyboard-area">
+                    <div class="key-row">
+                        <div class="key"></div><div class="key"></div><div class="key"></div><div class="key"></div>
+                        <div class="key"></div><div class="key"></div><div class="key"></div><div class="key"></div>
+                    </div>
+                    <div class="key-row">
+                        <div class="key"></div><div class="key"></div><div class="key"></div><div class="key"></div>
+                        <div class="key"></div><div class="key"></div><div class="key"></div>
+                    </div>
+                    <div class="key-row">
+                        <div class="key"></div><div class="key"></div><div class="key"></div><div class="key"></div>
+                        <div class="key"></div><div class="key"></div>
+                    </div>
+                    <div class="key-row">
+                        <div class="space-bar" id="key-space"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- GLOWING LINEAR PISTON ARMS -->
+            <div class="piston-hand piston-left" id="piston-l"></div>
+            <div class="piston-hand piston-right" id="piston-r"></div>
+
+        </div>
+    </div>
+
+    <script>
+        const fullLetterMessage = 
+`From: Afeez 💫
+
+To: Sania 🌸
+
+Hii Sania... 🌸
+
+Sach bolu... tumhare baare mein mujhe abhi zyada kuch pata nahi hai.
+
+Bas itna pata hai ki 19 July ko ek random call pe ek stranger mili thi... aur pata hi nahi chala kab woh stranger itni sweet lagne lagi. 😄
+
+Aur haan...
+
+Agar tum thodi zyada hi khoobsurat ho... toh kya hua? 😂
+
+Main bhi itna bechara nahi hoon ki dekhte hi behosh ho jaun... bas thoda sa network weak pad jaata hai. 🤭
+
+Waise ek baat batao...
+
+Tumhe Tulips pasand hain, Roses, ya Sunflowers? 🌷🌹🌻
+
+Ya phir... kisi din khud hi pata karna padega? 😌
+
+Chalo, ab main point pe aata hoon...
+
+Happy Birthday, Sania! 🎉🎂
+
+Dil se dua hai ki tum hamesha aise hi cute smile karti raho, khush raho, aur tumhare saare dreams ek ek karke reality ban jaayein.
+
+Aur haan...
+
+Aaj ka din sirf tumhara hai.
+
+Toh jitna ho sake utna smile karo... kyunki smile tum par genuinely bahut achhi lagti hai. ❤️
+
+Once again...
+
+Happy Birthday, Sania! 🥳✨
+
+— From Afeez 💫`;
+
+        const textContainer = document.getElementById('typewriter-text');
+        const paperElement = document.getElementById('paper');
+        const viewportElement = document.getElementById('viewport');
+        const pistonL = document.getElementById('piston-l');
+        const pistonR = document.getElementById('piston-r');
+        const mechanicalKeys = document.querySelectorAll('.key, .space-bar');
+
+        function openLetter() {
+            document.getElementById('cover').style.opacity = '0';
+            setTimeout(() => {
+                document.getElementById('cover').style.display = 'none';
+                startTypewriterFlow();
+            }, 800);
+        }
+
+        async function startTypewriterFlow() {
+            let charIndex = 0;
+            let isLeftTurn = true;
+
+            function triggerPistonStrike() {
+                // Alternately trigger the sleek mechanical bars hitting down
+                if (isLeftTurn) {
+                    pistonL.classList.add('strike-act');
+                    setTimeout(() => pistonL.classList.remove('strike-act'), 150);
+                } else {
+                    pistonR.classList.add('strike-act');
+                    setTimeout(() => pistonR.classList.remove('strike-act'), 150);
+                }
+                isLeftTurn = !isLeftTurn;
+
+                // Visual key depression light effect
+                const randomIndex = Math.floor(Math.random() * mechanicalKeys.length);
+                const targetedKey = mechanicalKeys[randomIndex];
+                targetedKey.classList.add('striking');
+                setTimeout(() => targetedKey.classList.remove('striking'), 80);
+            }
+
+            return new Promise((resolve) => {
+                function printCharacter() {
+                    if (charIndex < fullLetterMessage.length) {
+                        const character = fullLetterMessage[charIndex];
+                        textContainer.textContent += character;
+
+                        triggerPistonStrike();
+
+                        // PERFECT REAL-TIME SCROLLING CAPTURE
+                        // Automatically moves the target view window up smoothly so the typing line is always in focus
+                        const currentPaperHeight = paperElement.scrollHeight;
+                        const viewportHeight = viewportElement.clientHeight;
+                        
+                        if (currentPaperHeight > (viewportHeight - 60)) {
+                            const upwardScrollAmount = currentPaperHeight - (viewportHeight - 60);
+                            paperElement.style.transform = `translateY(-${upwardScrollAmount}px)`;
+                        }
+
+                        charIndex++;
+                        
+                        let deliberateDelay = 90 + Math.random() * 70;
+                        if (character === '.' || character === '?' || character === '!') {
+                            deliberateDelay = 650; 
+                        } else if (character === '\n') {
+                            deliberateDelay = 500; 
+                        }
+
+                        setTimeout(printCharacter, deliberateDelay);
+                    } else {
+                        resolve();
+                    }
+                }
+                printCharacter();
+            });
+        }
+    </script>
+</body>
+</html>
