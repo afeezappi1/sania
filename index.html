@@ -158,32 +158,26 @@
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
     <script>
-        // Target: July 30, 2026 at 00:00:00 Indian Standard Time (IST is UTC+5:30)
-        // ISO string format with timezone offset: 2026-07-30T00:00:00+05:30
-       //const targetDate = new Date("2026-07-30T00:00:00+05:30").getTime();
-
-        // Target: July 29, 2026 at 20:38:00 Indian Standard Time (IST is UTC+5:30)
-        // ISO string format with timezone offset: 2026-07-29T20:38:00+05:30
-        const targetDate = new Date("2026-07-29T21:44:00+05:30").getTime();
-
-  
+        // Target: July 29, 2026 at 21:44:00 Indian Standard Time
+        const targetDate = new Date("2026-07-30T00:00:00+05:30").getTime();
 
         const titleEl = document.getElementById("title");
         const nextBtn = document.getElementById("next-btn");
-        const countdownContainer = document.getElementById("countdown-container");
 
         const daysEl = document.getElementById("days");
         const hoursEl = document.getElementById("hours");
         const minutesEl = document.getElementById("minutes");
         const secondsEl = document.getElementById("seconds");
 
+        let timerInterval;
+
         function updateCountdown() {
             const now = new Date().getTime();
             const difference = targetDate - now;
 
             if (difference <= 0) {
-                // Time's up! Trigger celebration
-                clearInterval(timerInterval);
+                // Time's up or already passed! Trigger celebration
+                if (timerInterval) clearInterval(timerInterval);
                 
                 daysEl.innerText = "00";
                 hoursEl.innerText = "00";
@@ -239,9 +233,13 @@
             }, 250);
         }
 
-        // Run immediately on load, then update every second
+        // Run immediately on page load
         updateCountdown();
-        const timerInterval = setInterval(updateCountdown, 1000);
+        
+        // Only set interval if the target date is in the future
+        if (targetDate - new Date().getTime() > 0) {
+            timerInterval = setInterval(updateCountdown, 1000);
+        }
     </script>
 </body>
 </html>
